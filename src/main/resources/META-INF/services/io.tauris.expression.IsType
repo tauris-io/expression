@@ -1,0 +1,10 @@
+io.tauris.expression.IsBinary
+io.tauris.expression.IsFloatType
+io.tauris.expression.IsIntegerType
+io.tauris.expression.IsNullType
+io.tauris.expression.IsEmptyType
+io.tauris.expression.IsString
+io.tauris.expression.IsTrueType
+io.tauris.expression.IsHostType
+io.tauris.expression.IsIP4Type
+io.tauris.expression.IsListType
