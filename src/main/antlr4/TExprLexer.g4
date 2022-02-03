@@ -1,7 +1,7 @@
 lexer grammar TExprLexer;
 
 @header {
-    package com.aliyun.tauris.expression.ast;
+    package io.tauris.expression.ast;
 }
 
 Integer
@@ -46,6 +46,9 @@ IS         : 'is';
 IN         : 'in';
 TRUE       : 'true' ;
 FALSE      : 'false' ;
+ENDSWITH   : 'endswith' ;
+STARTSWITH : 'startswith' ;
+EXISTS     : 'exists' ;
 GT         : '>' ;
 GE         : '>=' ;
 LT         : '<' ;

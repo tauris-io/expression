@@ -19,13 +19,6 @@ public interface TExprParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParse(TExprParser.ParseContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code binaryExpression}
-	 * labeled alternative in {@link TExprParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBinaryExpression(TExprParser.BinaryExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code matchExpression}
 	 * labeled alternative in {@link TExprParser#expression}.
 	 * @param ctx the parse tree
@@ -33,33 +26,12 @@ public interface TExprParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMatchExpression(TExprParser.MatchExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code inExpression}
-	 * labeled alternative in {@link TExprParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInExpression(TExprParser.InExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code isTypeExpression}
 	 * labeled alternative in {@link TExprParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIsTypeExpression(TExprParser.IsTypeExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code calcExpression}
-	 * labeled alternative in {@link TExprParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCalcExpression(TExprParser.CalcExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code isNotTypeExpression}
-	 * labeled alternative in {@link TExprParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIsNotTypeExpression(TExprParser.IsNotTypeExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code notExpression}
 	 * labeled alternative in {@link TExprParser#expression}.
@@ -75,6 +47,55 @@ public interface TExprParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitParenExpression(TExprParser.ParenExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code variableExpression}
+	 * labeled alternative in {@link TExprParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariableExpression(TExprParser.VariableExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code binaryExpression}
+	 * labeled alternative in {@link TExprParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinaryExpression(TExprParser.BinaryExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code sewithExpression}
+	 * labeled alternative in {@link TExprParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSewithExpression(TExprParser.SewithExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code inExpression}
+	 * labeled alternative in {@link TExprParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInExpression(TExprParser.InExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code existsExpression}
+	 * labeled alternative in {@link TExprParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExistsExpression(TExprParser.ExistsExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code calcExpression}
+	 * labeled alternative in {@link TExprParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCalcExpression(TExprParser.CalcExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code isNotTypeExpression}
+	 * labeled alternative in {@link TExprParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIsNotTypeExpression(TExprParser.IsNotTypeExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code notInExpression}
 	 * labeled alternative in {@link TExprParser#expression}.
 	 * @param ctx the parse tree
@@ -88,13 +109,6 @@ public interface TExprParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitComparatorExpression(TExprParser.ComparatorExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code variableExpression}
-	 * labeled alternative in {@link TExprParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVariableExpression(TExprParser.VariableExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TExprParser#variable}.
 	 * @param ctx the parse tree
@@ -114,11 +128,23 @@ public interface TExprParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBinary(TExprParser.BinaryContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TExprParser#sewith}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSewith(TExprParser.SewithContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link TExprParser#bool}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitBool(TExprParser.BoolContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TExprParser#exists}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExists(TExprParser.ExistsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TExprParser#literal}.
 	 * @param ctx the parse tree

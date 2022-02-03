@@ -5,7 +5,7 @@ options { tokenVocab=TExprLexer; }
 
 
 @header {
-    package com.aliyun.tauris.expression.ast;
+    package io.tauris.expression.ast;
 }
 
 parse
@@ -22,6 +22,8 @@ expression
  | expression IS NOT type                         #isNotTypeExpression
  | expression comparator expression               #comparatorExpression
  | expression binary expression                   #binaryExpression
+ | variable sewith expression                     #sewithExpression
+ | variable exists                                #existsExpression
  | variable                                       #variableExpression
  | calc                                           #calcExpression
  ;
@@ -40,8 +42,16 @@ binary
  : AND | OR
  ;
 
+sewith
+ : STARTSWITH | ENDSWITH
+ ;
+
 bool
  : TRUE | FALSE
+ ;
+
+exists
+ : EXISTS
  ;
 
 literal

@@ -216,6 +216,59 @@ public class TBoolTest {
         ctx.set("$request_uri", "/hello/world");
         Assert.assertTrue(expression.check(ctx));
     }
+
+    @Test
+    public void testStartswith() {
+        String expr = "$str startswith 'hello'";
+        TExpression expression = TExpression.compile(expr);
+
+        MapContext ctx = new MapContext();
+        ctx.set("$str", "hello world");
+        Assert.assertTrue(expression.check(ctx));
+
+        ctx.set("$str", "world hello");
+        Assert.assertFalse(expression.check(ctx));
+
+        expr = "$str startswith $sub";
+        expression = TExpression.compile(expr);
+
+        ctx.set("$str", "hello world");
+        ctx.set("$sub", "hello");
+        Assert.assertTrue(expression.check(ctx));
+    }
+
+    @Test
+    public void testEndswith() {
+        String expr = "$str endswith 'world'";
+        TExpression expression = TExpression.compile(expr);
+
+        MapContext ctx = new MapContext();
+        ctx.set("$str", "hello world");
+        Assert.assertTrue(expression.check(ctx));
+
+        ctx.set("$str", "world hello");
+        Assert.assertFalse(expression.check(ctx));
+
+        expr = "$str endswith $sub";
+        expression = TExpression.compile(expr);
+
+        ctx.set("$str", "hello world");
+        ctx.set("$sub", "world");
+        Assert.assertTrue(expression.check(ctx));
+    }
+
+    @Test
+    public void testExists() {
+        String expr = "$str exists";
+        TExpression expression = TExpression.compile(expr);
+
+        MapContext ctx = new MapContext();
+        ctx.set("$str", "hello world");
+        Assert.assertTrue(expression.check(ctx));
+
+        ctx = new MapContext();
+        Assert.assertFalse(expression.check(ctx));
+    }
 }
 
 

@@ -262,6 +262,32 @@ public abstract class TExpression {
         }
 
         @Override
+        public TExpression visitSewithExpression(TExprParser.SewithExpressionContext ctx) {
+            if (ctx.sewith().STARTSWITH() != null) {
+                return new StartswithExpression(visitVariable(ctx.variable()), visit(ctx.expression()));
+            }
+            if (ctx.sewith().ENDSWITH() != null) {
+                return new EndswithExpression(visitVariable(ctx.variable()), visit(ctx.expression()));
+            }
+            return null;
+        }
+
+        @Override
+        public TExpression visitExistsExpression(TExprParser.ExistsExpressionContext ctx) {
+            return new ExistsExpression(visitVariable(ctx.variable()));
+        }
+
+        @Override
+        public TExpression visitSewith(TExprParser.SewithContext ctx) {
+            return super.visitSewith(ctx);
+        }
+
+        @Override
+        public TExpression visitExists(TExprParser.ExistsContext ctx) {
+            return super.visitExists(ctx);
+        }
+
+        @Override
         public TExpression visitVariable(TExprParser.VariableContext ctx) {
             if (ctx.VARIABLE() != null) {
                 variables.add(ctx.VARIABLE().toString());
