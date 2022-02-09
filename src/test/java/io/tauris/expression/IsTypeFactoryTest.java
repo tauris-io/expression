@@ -20,4 +20,17 @@ public class IsTypeFactoryTest {
         Assert.assertEquals("normal_underscore", IsTypeFactory.camelToUnderscore("normalUnderscore"));
         Assert.assertEquals("a_bc", IsTypeFactory.camelToUnderscore("aBc"));
     }
+
+    @Test
+    public void testRegisterType() {
+        TExpression.registerType(new IsTest());
+        Assert.assertTrue(TExpression.compile("'test' is test").check(new MockContext()));
+    }
+
+    public static class IsTest implements IsType {
+        @Override
+        public boolean check(Object value) {
+            return "test".equals(value);
+        }
+    }
 }

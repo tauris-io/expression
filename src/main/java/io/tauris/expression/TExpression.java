@@ -11,6 +11,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author Ray Chaung
@@ -80,10 +81,30 @@ public abstract class TExpression {
         }
     }
 
+    public static TExpression compileMultipleLine(String expr) {
+        if (expr.contains("\n")) {
+            List<String> lines = Arrays.stream(expr.split("\n"))
+                                        .filter(ln -> !ln.isEmpty())
+                                        .map(ln -> "(" + ln.trim() + ")")
+                                        .collect(Collectors.toList());
+            return compile(String.join(" && ", lines));
+        }
+        return compile(expr);
+    }
+
+
     public static void throwIfNull(Object arg, String name) throws IllegalArgumentException {
         if (arg == null) {
             throw new IllegalArgumentException(name + " is null");
         }
+    }
+
+    public static void registerFunction(EmbedFunction func) {
+        EMBED_FUNC_FACTORY.register(func);
+    }
+
+    public static void registerType(IsType type) {
+        IS_TYPE_FACTORY.register(type);
     }
 
     @Override
@@ -93,7 +114,7 @@ public abstract class TExpression {
 
     private static class ExpressionVisitor extends TExprParserBaseVisitor<TExpression> {
 
-        private Set<String> variables = new HashSet<>();
+        private final Set<String> variables = new HashSet<>();
 
         @Override
         public TExpression visit(ParseTree tree) {

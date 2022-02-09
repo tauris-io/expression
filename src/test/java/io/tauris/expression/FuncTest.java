@@ -70,4 +70,25 @@ public class FuncTest {
         }
         System.clearProperty("texpr.max_cache_size");
     }
+
+    @Test
+    public void testRegisterFunc() {
+        TExpression.registerFunction(new TestFunc());
+        MockContext c = new MockContext();
+        c.setField("hello", "world");
+        Assert.assertEquals("test world", TExpression.compile("test($hello)").eval(c));
+    }
+
+
+    public static class TestFunc implements EmbedFunction {
+        @Override
+        public String name() {
+            return "test";
+        }
+
+        @Override
+        public Object execute(Context ctx, List<Object> params) {
+            return "test " + params.get(0);
+        }
+    }
 }

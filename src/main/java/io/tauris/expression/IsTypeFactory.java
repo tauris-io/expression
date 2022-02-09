@@ -18,6 +18,10 @@ public class IsTypeFactory  {
         }
     }
 
+    public void register(IsType type) {
+        types.put(nameOfType(type), type);
+    }
+
     public Object newInstance(String name) {
         IsType t = types.get(name);
         if (t == null) {

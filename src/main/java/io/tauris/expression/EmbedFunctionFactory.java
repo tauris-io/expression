@@ -18,6 +18,10 @@ public class EmbedFunctionFactory {
         }
     }
 
+    public void register(EmbedFunction func) {
+        funcs.put(func.name(), func);
+    }
+
     public Object newInstance(String name) {
         EmbedFunction t = funcs.get(name);
         if (t == null) {
