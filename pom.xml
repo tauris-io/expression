@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
     <name>TExpr</name>
     <description>Java boolean evaluate and numerical calculation expression</description>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <url>https://github.com/tauris-io/expression</url>
 
     <licenses>
