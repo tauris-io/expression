@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
  */
 public abstract class TExpression {
 
-    private static IsTypeFactory        IS_TYPE_FACTORY    = new IsTypeFactory();
-    private static EmbedFunctionFactory EMBED_FUNC_FACTORY = new EmbedFunctionFactory();
+    private final static IsTypeFactory        IS_TYPE_FACTORY    = new IsTypeFactory();
+    private final static EmbedFunctionFactory EMBED_FUNC_FACTORY = new EmbedFunctionFactory();
 
     protected String expression;
 
@@ -108,6 +108,18 @@ public abstract class TExpression {
     }
 
     @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return Objects.equals(this.toString(), o.toString());
+    }
+
+    @Override
     public String toString() {
         return expression;
     }
@@ -168,14 +180,14 @@ public abstract class TExpression {
                 return ctx.strings().accept(this);
             }
             if (ctx.getText().replaceAll(" ", "").equals("[]")) {
-                return new SetExpression(new HashSet<>());
+                return new SetExpression(Collections.emptyList());
             }
             throw new IllegalArgumentException("unknown array type");
         }
 
         @Override
         public TExpression visitStrings(TExprParser.StringsContext ctx) {
-            Set<SetExpression.Element> set = new HashSet<>();
+            List<SetExpression.Element> set = new ArrayList<>();
             for (TerminalNode n : ctx.String()) {
                 char quoteChar = n.getText().charAt(0);
                 set.add(new SetExpression.StringElement(n.getText().substring(1, n.getText().length() - 1), quoteChar));
@@ -185,7 +197,7 @@ public abstract class TExpression {
 
         @Override
         public TExpression visitIntegers(TExprParser.IntegersContext ctx) {
-            Set<SetExpression.Element> set = new HashSet<>();
+            List<SetExpression.Element> set = new ArrayList<>();
             for (TerminalNode n : ctx.Integer()) {
                 set.add(new SetExpression.SimpleElement<>(Long.valueOf(n.getText())));
             }
@@ -194,7 +206,7 @@ public abstract class TExpression {
 
         @Override
         public TExpression visitFloats(TExprParser.FloatsContext ctx) {
-            Set<SetExpression.Element> set = new HashSet<>();
+            List<SetExpression.Element> set = new ArrayList<>();
             for (TerminalNode n : ctx.Float()) {
                 set.add(new SetExpression.SimpleElement<>(Double.valueOf(n.getText())));
             }
@@ -203,7 +215,7 @@ public abstract class TExpression {
 
         @Override
         public TExpression visitBooleans(TExprParser.BooleansContext ctx) {
-            Set<SetExpression.Element> set = new HashSet<>();
+            List<SetExpression.Element> set = new ArrayList<>();
             for (TerminalNode n : ctx.Boolean()) {
                 set.add(new SetExpression.SimpleElement<>(Boolean.valueOf(n.getText())));
             }

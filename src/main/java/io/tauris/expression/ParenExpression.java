@@ -6,7 +6,7 @@ package io.tauris.expression;
  */
 public class ParenExpression extends TExpression {
 
-    private TExpression inner;
+    private final TExpression inner;
 
     public ParenExpression(TExpression inner) {
         this.inner = inner;

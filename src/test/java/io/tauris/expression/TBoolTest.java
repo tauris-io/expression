@@ -23,37 +23,44 @@ public class TBoolTest {
         e.setField("flag", false);
         e.setField("array", new String[]{"v1", "v2", "v3"});
         e.addMeta("author", "chuanshi.zl");
-        Assert.assertTrue(TExpression.compile("1 > 0").check(e));
-        Assert.assertFalse(TExpression.compile("0 > 0").check(e));
-        Assert.assertTrue(TExpression.compile("$empty is empty").check(e));
-        Assert.assertTrue(TExpression.compile("[  ] is empty").check(e));
-        Assert.assertTrue(TExpression.compile("$name == 'world'").check(e));
-        Assert.assertTrue(TExpression.compile("@author == 'chuanshi.zl'").check(e));
-        Assert.assertTrue(TExpression.compile("$status == 302.0").check(e));
-        Assert.assertTrue(TExpression.compile("5 in [1,2,3,4,5,6]").check(e));
-        Assert.assertTrue(TExpression.compile("true in [true, false]").check(e));
-        Assert.assertTrue(TExpression.compile("'hello' in ['hello', 'world', '!']").check(e));
-        Assert.assertTrue(TExpression.compile("9.5 in [1.1, 5.5, 7.7, 9.5, 11.1]").check(e));
-        Assert.assertFalse(TExpression.compile("'hello' not in ['hello', 'world', '!']").check(e));
-        Assert.assertTrue(TExpression.compile("'1.1.1.1' =~ /[\\d]+\\.[\\d]+\\.[\\d]+\\.[\\d]+/").check(e));
-        Assert.assertTrue(TExpression.compile("'1.1.1.1' is host").check(e));
-        Assert.assertTrue(TExpression.compile("'www.taobao.com' is host").check(e));
-        Assert.assertTrue(TExpression.compile("$not_exist is null").check(e));
-        Assert.assertTrue(TExpression.compile("2 > 1").check(e));
-        Assert.assertTrue(TExpression.compile("1 < 2").check(e));
-        Assert.assertTrue(TExpression.compile("$status >= 300 && $status < 400").check(e));
+        Assert.assertTrue(check("1 > 0", e));
+        Assert.assertFalse(check("0 > 0", e));
+        Assert.assertTrue(check("$empty is empty", e));
+        Assert.assertTrue(check("[] is empty", e));
+        Assert.assertTrue(check("$name == 'world'", e));
+        Assert.assertTrue(check("@author == 'chuanshi.zl'", e));
+        Assert.assertTrue(check("$status == 302.0", e));
+        Assert.assertTrue(check("5 in [1,2,3,4,5,6]", e));
+        Assert.assertTrue(check("true in [true,false]", e));
+        Assert.assertTrue(check("'hello' in ['hello','world','!']", e));
+        Assert.assertTrue(check("9.5 in [1.1,5.5,7.7,9.5,11.1]", e));
+        Assert.assertFalse(check("'hello' not in ['hello','world','!']", e));
+        Assert.assertTrue(check("'1.1.1.1' =~ /[\\d]+\\.[\\d]+\\.[\\d]+\\.[\\d]+/", e));
+        Assert.assertTrue(check("'1.1.1.1' is host", e));
+        Assert.assertTrue(check("'www.taobao.com' is host", e));
+        Assert.assertTrue(check("$not_exist is null", e));
+        Assert.assertTrue(check("2 > 1", e));
+        Assert.assertTrue(check("1 < 2", e));
+        Assert.assertTrue(check("$status >= 300 && $status < 400", e));
 
-        Assert.assertTrue(TExpression.compile("$flag != true").check(e));
-        Assert.assertTrue(TExpression.compile("'192.168.1.1' is ip4").check(e));
-        Assert.assertTrue(TExpression.compile("$not_exist != true").check(e));
-        Assert.assertFalse(TExpression.compile("$not_exist").check(e));
+        Assert.assertTrue(check("$flag != true", e));
+        Assert.assertTrue(check("'192.168.1.1' is ip4", e));
+        Assert.assertTrue(check("$not_exist != true", e));
+        Assert.assertFalse(check("$not_exist", e));
 
-        Assert.assertTrue(TExpression.compile("'abc' in 'abcdefg'").check(e));
-        Assert.assertTrue(TExpression.compile("'fgh' not in 'abcdefg'").check(e));
-        Assert.assertTrue(TExpression.compile("'a' in ['a', 'b', 'c']").check(e));
-        Assert.assertTrue(TExpression.compile("'e' not in ['a', 'b', 'c']").check(e));
-        Assert.assertTrue(TExpression.compile("'v2' in $array").check(e));
-        Assert.assertTrue(TExpression.compile("'v4' not in $array").check(e));
+        Assert.assertTrue(check("'abc' in 'abcdefg'", e));
+        Assert.assertTrue(check("'fgh' not in 'abcdefg'", e));
+        Assert.assertTrue(check("'a' in ['a','b','c']",e));
+        Assert.assertTrue(check("'e' not in ['a','b','c']", e));
+        Assert.assertTrue(check("'v2' in $array", e));
+        Assert.assertTrue(check("'v4' not in $array", e));
+    }
+
+    private boolean check(String exp, Context ctx) {
+        TExpression ex = TExpression.compile(exp);
+        Assert.assertEquals(exp, ex.toString());
+        Assert.assertTrue(ex.equals(TExpression.compile(exp)));
+        return ex.check(ctx);
     }
 
     @Test

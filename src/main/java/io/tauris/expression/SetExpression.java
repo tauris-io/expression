@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
  */
 public class SetExpression extends TExpression implements ContainerExpression {
 
-    private Collection<? extends Element> elements;
-    private Set<Object>                   values ;
+    private final List<? extends Element> elements;
+    private final Set<Object>             values;
 
-    public SetExpression(Collection<? extends Element> set) {
+    public SetExpression(List<? extends Element> set) {
         this.elements = set;
         this.values = set.stream().map(Element::value).collect(Collectors.toSet());
     }
@@ -36,7 +36,7 @@ public class SetExpression extends TExpression implements ContainerExpression {
         for (Element o : elements) {
             strs.add(o.toString());
         }
-        return String.join(",", strs);
+        return "[" + String.join(",", strs) + "]";
     }
 
     public  interface Element {
@@ -45,8 +45,8 @@ public class SetExpression extends TExpression implements ContainerExpression {
 
     public static class StringElement implements Element {
 
-        private String value;
-        private char quoteChar;
+        private final String value;
+        private final char   quoteChar;
 
         public StringElement(String value, char quoteChar) {
             this.value = value;
@@ -65,7 +65,7 @@ public class SetExpression extends TExpression implements ContainerExpression {
 
     public static class SimpleElement<T> implements Element {
 
-        private T value;
+        private final T value;
 
         public SimpleElement(T value) {
             this.value = value;

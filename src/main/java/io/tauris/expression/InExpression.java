@@ -6,8 +6,8 @@ package io.tauris.expression;
  */
 public class InExpression extends TExpression {
 
-    private TExpression         left;
-    private ContainerExpression container;
+    private final TExpression         left;
+    private final ContainerExpression container;
 
     private boolean not;
 
@@ -32,6 +32,10 @@ public class InExpression extends TExpression {
 
     @Override
     public String toString() {
-        return String.format("%s in [%s]", left.toString(), container.toString());
+        if (not) {
+            return String.format("%s not in %s", left.toString(), container.toString());
+        } else {
+            return String.format("%s in %s", left.toString(), container.toString());
+        }
     }
 }

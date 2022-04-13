@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 public class FunctionExpresion extends TExpression {
 
 
-    private List<TExpression> params;
+    private final List<TExpression> params;
 
-    private EmbedFunction function;
+    private final EmbedFunction function;
 
     public FunctionExpresion(EmbedFunction function, List<TExpression> params) {
         this.function = function;

@@ -11,7 +11,7 @@ public class IsBinary implements IsType {
 
     @Override
     public boolean check(Object value) {
-        if (value == null || !(value instanceof String)) {
+        if (!(value instanceof String)) {
             return false;
         }
         String str = (String)value;

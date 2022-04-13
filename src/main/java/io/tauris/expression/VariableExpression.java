@@ -8,7 +8,7 @@ import java.util.Collection;
  */
 public class VariableExpression extends TExpression implements ContainerExpression {
 
-    private String name;
+    private final String name;
 
     public VariableExpression(String name) {
         this.name = name;

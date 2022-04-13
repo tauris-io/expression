@@ -6,7 +6,6 @@ package io.tauris.expression;
  */
 public abstract class ComparatorOp {
 
-
     public abstract Comparable eval(Context e, TExpression left, TExpression right);
 
     private static int compare(Context e, TExpression left, TExpression right) {
@@ -32,27 +31,30 @@ public abstract class ComparatorOp {
 
     public static ComparatorOp build(String op) {
         if (op.equals(">")) {
-            return new GT();
+            return GT.gt;
         }
         if (op.equals(">=")) {
-            return new GT(true);
+            return GT.gte;
         }
         if (op.equals("<")) {
-            return new LT();
+            return LT.lt;
         }
         if (op.equals("<=")) {
-            return new LT(true);
+            return LT.lte;
         }
         if (op.equals("==")) {
-            return new EQ();
+            return EQ.eq;
         }
         if (op.equals("!=")) {
-            return new NE();
+            return NE.ne;
         }
         throw new IllegalArgumentException("illegal comparator op :" + op);
     }
 
     private static class GT extends ComparatorOp {
+
+        private static final GT gt = new GT();
+        private static final GT gte = new GT(true);
 
         private boolean equals;
 
@@ -77,6 +79,9 @@ public abstract class ComparatorOp {
 
     private static class LT extends ComparatorOp {
 
+        private static final LT lt = new LT();
+        private static final LT lte = new LT(true);
+
         private boolean equals;
 
         public LT() {
@@ -100,6 +105,8 @@ public abstract class ComparatorOp {
 
     private static class EQ extends ComparatorOp {
 
+        private static final EQ eq = new EQ();
+
         @Override
         public Comparable eval(Context e, TExpression left, TExpression right) {
             int x = compare(e, left, right);
@@ -113,6 +120,8 @@ public abstract class ComparatorOp {
     }
 
     private static class NE extends ComparatorOp {
+
+        private static final NE ne = new NE();
 
         @Override
         public Comparable eval(Context e, TExpression left, TExpression right) {

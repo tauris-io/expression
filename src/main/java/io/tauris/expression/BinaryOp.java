@@ -10,15 +10,18 @@ public abstract class BinaryOp {
 
     public static BinaryOp build(String op) {
         if (op.equals("&&") || op.equals("and")) {
-            return new And();
+            return And.and;
         }
         if (op.equals("||") || op.equals("or")) {
-            return new Or();
+            return Or.or;
         }
         throw new IllegalArgumentException("illegal binary op :" + op);
     }
 
     private static class Or extends BinaryOp {
+
+        private static final Or or = new Or();
+
         @Override
         public boolean eval(Context e, TExpression left, TExpression right) {
             boolean lv = left.check(e);
@@ -35,6 +38,9 @@ public abstract class BinaryOp {
     }
 
     private static class And extends BinaryOp {
+
+        private static final And and = new And();
+
         @Override
         public boolean eval(Context e, TExpression left, TExpression right) {
             boolean lv = left.check(e);
