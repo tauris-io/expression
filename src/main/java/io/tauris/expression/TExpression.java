@@ -199,7 +199,8 @@ public abstract class TExpression {
         public TExpression visitIntegers(TExprParser.IntegersContext ctx) {
             List<SetExpression.Element> set = new ArrayList<>();
             for (TerminalNode n : ctx.Integer()) {
-                set.add(new SetExpression.SimpleElement<>(Long.valueOf(n.getText())));
+                long val = Long.valueOf(n.getText());
+                set.add(new SetExpression.SimpleElement<>(val, val != 0));
             }
             return new SetExpression(set);
         }
@@ -208,7 +209,8 @@ public abstract class TExpression {
         public TExpression visitFloats(TExprParser.FloatsContext ctx) {
             List<SetExpression.Element> set = new ArrayList<>();
             for (TerminalNode n : ctx.Float()) {
-                set.add(new SetExpression.SimpleElement<>(Double.valueOf(n.getText())));
+                double val = Double.valueOf(n.getText());
+                set.add(new SetExpression.SimpleElement<>(val, val != 0));
             }
             return new SetExpression(set);
         }
@@ -217,7 +219,8 @@ public abstract class TExpression {
         public TExpression visitBooleans(TExprParser.BooleansContext ctx) {
             List<SetExpression.Element> set = new ArrayList<>();
             for (TerminalNode n : ctx.Boolean()) {
-                set.add(new SetExpression.SimpleElement<>(Boolean.valueOf(n.getText())));
+                boolean b = Boolean.valueOf(n.getText());
+                set.add(new SetExpression.SimpleElement<>(b, b));
             }
             return new SetExpression(set);
         }

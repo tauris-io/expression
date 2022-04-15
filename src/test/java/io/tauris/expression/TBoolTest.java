@@ -276,6 +276,43 @@ public class TBoolTest {
         ctx = new MapContext();
         Assert.assertFalse(expression.check(ctx));
     }
+
+    @Test
+    public void testCheck() {
+        MapContext ctx = new MapContext();
+        ctx.set("$obj", new Object());
+        Assert.assertTrue(TExpression.compile("$obj").check(ctx));
+        Assert.assertFalse(TExpression.compile("$null").check(ctx));
+
+        ctx.set("$str", "hello world");
+        Assert.assertTrue(TExpression.compile("$str").check(ctx));
+
+        ctx.set("$str", "");
+        Assert.assertFalse(TExpression.compile("$str").check(ctx));
+
+        ctx.set("$int", 1);
+        Assert.assertTrue(TExpression.compile("$int").check(ctx));
+
+        ctx.set("$int", 0);
+        Assert.assertFalse(TExpression.compile("$int").check(ctx));
+
+        ctx.set("$ary", new String[]{"1", "2"});
+        Assert.assertTrue(TExpression.compile("$ary").check(ctx));
+
+        ctx.set("$ary", new String[]{});
+        Assert.assertFalse(TExpression.compile("$ary").check(ctx));
+
+        Assert.assertTrue(TExpression.compile("'hi'").check(ctx));
+        Assert.assertFalse(TExpression.compile("''").check(ctx));
+
+        ctx.set("$bool", true);
+        Assert.assertTrue(TExpression.compile("$bool").check(ctx));
+
+        ctx.set("$bool", false);
+        Assert.assertFalse(TExpression.compile("$bool").check(ctx));
+
+
+    }
 }
 
 

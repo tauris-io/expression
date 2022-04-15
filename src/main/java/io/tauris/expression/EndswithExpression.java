@@ -17,7 +17,9 @@ public class EndswithExpression extends TExpression {
 
     @Override
     public Object eval(Context e) {
-        return ((String)left.eval(e)).endsWith((String)right.eval((e)));
+        Object l = left.eval(e);
+        Object r = right.eval(e);
+        return l != null && r != null && ((String)l).endsWith((String)right.eval((e)));
     }
 
     public String toString() {

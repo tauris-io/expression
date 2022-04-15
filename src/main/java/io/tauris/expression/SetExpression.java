@@ -31,6 +31,11 @@ public class SetExpression extends TExpression implements ContainerExpression {
     }
 
     @Override
+    public Boolean check(Context e) {
+        return !values.isEmpty();
+    }
+
+    @Override
     public String toString() {
         List<String> strs = new ArrayList<>();
         for (Element o : elements) {
@@ -41,6 +46,8 @@ public class SetExpression extends TExpression implements ContainerExpression {
 
     public  interface Element {
         Object value();
+
+        boolean check();
     }
 
     public static class StringElement implements Element {
@@ -51,6 +58,11 @@ public class SetExpression extends TExpression implements ContainerExpression {
         public StringElement(String value, char quoteChar) {
             this.value = value;
             this.quoteChar = quoteChar;
+        }
+
+        @Override
+        public boolean check() {
+            return !value.isEmpty();
         }
 
         @Override
@@ -66,9 +78,16 @@ public class SetExpression extends TExpression implements ContainerExpression {
     public static class SimpleElement<T> implements Element {
 
         private final T value;
+        private final boolean bool;
 
-        public SimpleElement(T value) {
+        public SimpleElement(T value, boolean bool) {
             this.value = value;
+            this.bool = bool;
+        }
+
+        @Override
+        public boolean check() {
+            return bool;
         }
 
         @Override

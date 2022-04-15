@@ -6,7 +6,7 @@ package io.tauris.expression;
  */
 public class NotExpression extends TExpression {
 
-    private TExpression right;
+    private final TExpression right;
 
     public NotExpression(TExpression right) {
         if (right == null) throw new IllegalArgumentException("null value");
@@ -14,12 +14,9 @@ public class NotExpression extends TExpression {
     }
 
     @Override
-    public Comparable eval(Context e) {
-        Object ret = right.eval(e);
-        if (!(ret instanceof Boolean)) {
-            throw new ExprException(String.format("`%s` is not a boolean expression", right.toString()));
-        }
-        return !((Boolean)ret);
+    public Object eval(Context e) {
+        boolean ret = right.check(e);
+        return !ret;
     }
 
     @Override

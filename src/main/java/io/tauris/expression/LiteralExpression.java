@@ -8,7 +8,7 @@ public abstract class LiteralExpression extends TExpression {
 
     public static class INT extends LiteralExpression {
 
-        private Long value;
+        private final Long value;
 
         public INT(Long value) {
             this.value = value;
@@ -20,6 +20,11 @@ public abstract class LiteralExpression extends TExpression {
         }
 
         @Override
+        public Boolean check(Context e) {
+            return value != 0;
+        }
+
+        @Override
         public String toString() {
             return value.toString();
         }
@@ -27,7 +32,7 @@ public abstract class LiteralExpression extends TExpression {
 
     public static class FLOAT extends LiteralExpression {
 
-        private Double value;
+        private final Double value;
 
         public FLOAT(Double value) {
             this.value = value;
@@ -39,6 +44,11 @@ public abstract class LiteralExpression extends TExpression {
         }
 
         @Override
+        public Boolean check(Context e) {
+            return value != 0;
+        }
+
+        @Override
         public String toString() {
             return value.toString();
         }
@@ -46,7 +56,7 @@ public abstract class LiteralExpression extends TExpression {
 
     public static class STRING extends LiteralExpression implements ContainerExpression {
 
-        private String value;
+        private final String value;
 
         private boolean doubleQuote;
 
@@ -60,6 +70,11 @@ public abstract class LiteralExpression extends TExpression {
         @Override
         public boolean contains(Context c, Object o) {
             return o instanceof String && value.contains((String) o);
+        }
+
+        @Override
+        public Boolean check(Context e) {
+            return !value.isEmpty();
         }
 
         @Override
@@ -79,7 +94,7 @@ public abstract class LiteralExpression extends TExpression {
 
     public static class BOOLEAN extends LiteralExpression {
 
-        private Boolean value;
+        private final Boolean value;
 
         public BOOLEAN(Boolean value) {
             this.value = value;
@@ -87,6 +102,11 @@ public abstract class LiteralExpression extends TExpression {
 
         @Override
         public Object eval(Context e) {
+            return value;
+        }
+
+        @Override
+        public Boolean check(Context e) {
             return value;
         }
 

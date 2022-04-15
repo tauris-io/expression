@@ -17,7 +17,9 @@ public class StartswithExpression extends TExpression {
 
     @Override
     public Object eval(Context e) {
-        return ((String)left.eval(e)).startsWith((String)right.eval((e)));
+        Object l = left.eval(e);
+        Object r = right.eval(e);
+        return l != null && r != null && ((String)left.eval(e)).startsWith((String)right.eval((e)));
     }
 
     public String toString() {

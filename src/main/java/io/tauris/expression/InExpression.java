@@ -24,6 +24,11 @@ public class InExpression extends TExpression {
 
     @Override
     public Object eval(Context e) {
+        return check(e);
+    }
+
+    @Override
+    public Boolean check(Context e) {
         Object v = left.eval(e);
         if (v == null) return false;
         boolean r = container.contains(e, v);
